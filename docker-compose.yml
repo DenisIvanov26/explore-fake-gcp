@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  # Fake GCS Server (Without HTTPS)
+  fake-gcs:
+    image: fsouza/fake-gcs-server
+    command:
+      [
+        '-scheme',
+        'http',
+        '-port',
+        '8080',
+        '-external-url',
+        'http://localhost:8080',
+        '-backend',
+        'memory',
+      ]
+    ports:
+      - '4443:4443' # Expose HTTPS port
+      - '8080:8080' # Expose HTTP port
+    volumes:
+      - ./data:/data
+    environment:
+      - DATA_DIR=/data
