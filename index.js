@@ -9,6 +9,8 @@ async function run() {
     projectId: "test",
   });
 
+  //await storage.createBucket("sample-bucket")
+
   // Lists all buckets in the current project
   console.log("getting buckets")
   const [buckets] = await storage.getBuckets();
@@ -18,12 +20,14 @@ async function run() {
     console.log(bucket.id);
   });
   // [END storage_list_buckets]
+  console.log(await storage.bucket("sample-bucket").exists())
+  
 
-  const [content] = await storage.bucket('sample-bucket')
-    .file('some_file.txt')
-    .download();
-  console.log("Contents:")
-  console.log(content.toString())
+  // get the contents of the bucket
+  console.log("getting contents")
+  const [files] = await storage.bucket("sample-bucket").getFiles();
+    console.log("Files:");
+    console.log(files);
 }
 
 
